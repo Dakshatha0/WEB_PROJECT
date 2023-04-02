@@ -4,15 +4,15 @@ module.exports = async() => {
 
     try{
         const connect = await mongoose.connect(mongoUri, {
-             useNewUrlParser: true, useUnifiedTopology: true
-             // serverApi: ServerApiVersion.v1 
+             useNewUrlParser: true, useUnifiedTopology: true,
+            //   serverApi: ServerApiVersion.v1 
        });
 
        console.log(`MongoDB Connected: ${connect.connection.host}`);
     }
-    catch(error){
+    catch (error){
         console.log(error);
         process.exit(1);
     }
     
-}
+};
