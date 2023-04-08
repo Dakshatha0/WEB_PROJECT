@@ -2,8 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const dbConnect = require('./dbConnect');
 const authRouter = require('./routers/authRouter');
-const morgan = require('morgan');
 const postsRouter = require('./routers/postsRouter');
+const morgan = require('morgan');
+
 dotenv.config("./.env");
 
 const app = express();
