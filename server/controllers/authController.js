@@ -61,7 +61,7 @@ const refreshAccessTokenController = async (req, res) => {
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_PRIVATE_KEY);
         
         const _id = decoded._id;
-        const accessToken = generateAccessToken({_id });
+        const accessToken = generateAccessToken({_id});
         
         return res.status(201).json({ accessToken });
     }
