@@ -13,8 +13,8 @@ module.exports = async(req,res,next) => {
         next();
     }
     
-    catch (error) {
-        console.log(error);
+    catch (e) {
+        console.log(e);
         return res.status(401).send('Invalid access key');
     }
     console.log(accessToken);

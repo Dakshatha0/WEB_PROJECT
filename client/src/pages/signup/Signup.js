@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
-import './Signup.scss'
+import './Signup.scss';
 
 function Signup() {
     return <div className="Signup">
