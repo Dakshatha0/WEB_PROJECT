@@ -1,27 +1,27 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { error } = require('../utils/responseWrapper');
+const { success, error } = require('../utils/responseWrapper');
 
 const signUpController = async (req, res) => {
     try {
         const {email,password} = req.body;
         if(!email || !password){
-            return res.status(400).send(error(400), 'All fields are required');
+            return res.status(400).send(error(400, 'All fields are required'));
         }
 
         const oldUser = await User.findOne({ email });
         if(oldUser) {
-            return res.status(409).send(error(409),'User is already registered');
+            return res.status(409).send(error(409,'User is already registered'));
         } 
         const hashPassword = await bcrypt.hash(password, 10);
         const user = await User.create({
             email,
             password: hashPassword,
         });
-        return res.status(201).send(success(201), {
+        return res.status(201).send(success(201, {
             user,
-        });
+        }));
     } 
     catch (error) {
         console.log(error);
@@ -32,16 +32,16 @@ const logInController = async (req, res) => {
     try {
         const { email, password } = req.body;
         if(!email || !password){
-            return res.status(400).send(error(400), 'All fields are required');
+            return res.status(400).send(error(400, 'All fields are required'));
         }
 
         const user = await User.findOne({ email });
         if(!user) {
-            return res.status(404).send(error(404),'User not registered');
+            return res.status(404).send(error(404,'User not registered'));
         } 
         const matched = await bcrypt.compare(password, user.password);
         if(!matched) {
-            return res.status(403).send(error(403),'Incorrect password');
+            return res.status(403).send(error(403,'Incorrect password'));
         }
         const accessToken = generateAccessToken({_id:user._id,});
         const refreshToken = generateRefreshToken({_id:user._id,});
@@ -54,14 +54,14 @@ const logInController = async (req, res) => {
         return res.status(200).send(success(200, {accessToken}));
     } 
     catch (error) {
-        
+        console.log(error);
     }
 };
 //this api will check the refresh token validity and generate a new access token
 const refreshAccessTokenController = async (req, res) => {
     const cookies = req.cookies;
     if(!cookies.jwt) {
-        return res.status(401).send(error(401),'Refresh token in cookie is required');
+        return res.status(401).send(error(401,'Refresh token in cookie is required'));
     }
     const refreshToken = cookies.jwt 
 
@@ -76,7 +76,7 @@ const refreshAccessTokenController = async (req, res) => {
     
     catch (e) {
         console.log(error);
-        return res.send(error(401),'Invalid refresh token');
+        return res.send(error(401,'Invalid refresh token'));
     }
 }
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { KEY_ACCESS_TOKEN, getItem, removeItem, setItem } from './localStorageManager';
 
 export const axiosClient =  axios.create({
-    baseURL: 'http://localhost:4000',
+    baseURL: process.env.REACT_APP_SERVER_BASE_URL,
     withCredentials: true
 })
 
@@ -19,22 +19,25 @@ axiosClient.interceptors.response.use(
     async(response) => {
         const data = response.data;
         if(data.status === 'ok') {
-            return response;
+            return data;
         }
         const originalRequest = response.config;
         const statusCode = data.statusCode;
         const error = data.error;
 
         if( //when refresh token expires, send user to login page
-            statusCode === 401 && originalRequest.url === 'http://localhost:4000/auth/refresh') 
+            statusCode === 401 && originalRequest.url === `${process.env.REACT_APP_SERVER_BASE_URL}}/auth/refresh`) 
         {
             removeItem(KEY_ACCESS_TOKEN);
             window.location.replace('/login', '_self');
             return Promise.reject(error);
         }
-        if(statusCode === 401) {
-            const response = await axiosClient.get('/auth/refresh');
-            console.log('response from backend', response);
+        if(statusCode === 401 && !originalRequest.retry) { //means the eaccess token has expired
+            originalRequest.retry = true;
+            
+            const response = await axios.create({
+                withCredentials: true,
+            }).get(`${process.env.REACT_APP_SERVER_BASE_URL}/auth/refresh`)
 
             if(response.status === 'ok') {
                 setItem(KEY_ACCESS_TOKEN, response.result.accessToken);
