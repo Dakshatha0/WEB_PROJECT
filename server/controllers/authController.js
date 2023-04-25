@@ -5,26 +5,27 @@ const { success, error } = require('../utils/responseWrapper');
 
 const signUpController = async (req, res) => {
     try {
-        const {email,password} = req.body;
-        if(!email || !password){
+        const {name, email,password} = req.body;
+        if(!email || !password || !name){
             return res.status(400).send(error(400, 'All fields are required'));
         }
 
-        const oldUser = await User.findOne({ email });
+        const oldUser = await User.findOne({ email }).select('+password');
         if(oldUser) {
             return res.status(409).send(error(409,'User is already registered'));
         } 
         const hashPassword = await bcrypt.hash(password, 10);
         const user = await User.create({
+            name,
             email,
             password: hashPassword,
         });
-        return res.status(201).send(success(201, {
-            user,
-        }));
+        const newUser = await User.findById(user._id);
+
+        return res.send(success(201, 'User created successfuly'));
     } 
-    catch (error) {
-        console.log(error);
+    catch (e) {
+        return res.send(error(500, e.message));
     }
 };
 
@@ -53,8 +54,8 @@ const logInController = async (req, res) => {
 
         return res.status(200).send(success(200, {accessToken}));
     } 
-    catch (error) {
-        console.log(error);
+    catch (e) {
+        return res.send(error(500, e.message));
     }
 };
 //this api will check the refresh token validity and generate a new access token
