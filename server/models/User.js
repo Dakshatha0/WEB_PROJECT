@@ -10,11 +10,14 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: true
+        select: false
     },
     name: {
         type: String,
         required: true
+    },
+    bio: {
+        type: String
     },
     avatar: { //to attach images
         publicId: String,

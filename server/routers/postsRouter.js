@@ -4,6 +4,6 @@ const requireUser = require('../middlewares/requireUser');
 
 router.get('/all', requireUser , postsController.getAllPostsController);
 router.post('/', requireUser, postsController.getAllPostsController);
-
+router.post('/like', requireUser, postsController.likeAndUnlikePost);
 
 module.exports = router;
