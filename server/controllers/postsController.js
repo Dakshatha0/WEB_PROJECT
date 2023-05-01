@@ -1,10 +1,11 @@
-const { success } = require("../utils/responseWrapper");
+const { success, error } = require("../utils/responseWrapper");
 const Post = require('../models/Post');
+const User = require('../models/User');
 
-const getAllPostsController = async (req, res) => {
-    console.log(req._id);
-    return res.send(success(200, "These are all the posts"));
-};
+// const getAllPostsController = async (req, res) => {
+//     console.log(req._id);
+//     return res.send(success(200, "These are all the posts"));
+// };
 const createPostController = async (req, res) => {
     try {
         const { caption } = req.body;
@@ -58,7 +59,7 @@ const likeAndUnlikePost = async (req, res) => {
 }
 
 module.exports = {
-    getAllPostsController,
+    //getAllPostsController,
     createPostController,
     likeAndUnlikePost
 }
