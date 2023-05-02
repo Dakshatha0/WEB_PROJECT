@@ -57,9 +57,32 @@ const likeAndUnlikePost = async (req, res) => {
     }
     
 }
+const updatePostController = async (req, res) => {
+    try {
+        const {postId} = req.body;
+        const userId = req._id;
+
+        const post = await Post.findById(postId);
+        if(!post) {
+            return res.send(error(404, 'Post not found'));
+        }
+        if(post.owner.toString() != curUserId) {
+            return res.send(error(403, 'Only owners can update their posts'));
+        }
+        if(caption) {
+            post.caption = caption;
+        }
+        await post.save();
+        return res.send(success(200, {post}));
+    }
+    catch (error) {
+        return res.send(error(500, e.message));
+    }
+};
 
 module.exports = {
     //getAllPostsController,
     createPostController,
-    likeAndUnlikePost
+    likeAndUnlikePost,
+    updatePostController
 }
