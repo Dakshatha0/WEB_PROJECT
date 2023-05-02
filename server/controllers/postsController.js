@@ -2,10 +2,6 @@ const { success, error } = require("../utils/responseWrapper");
 const Post = require('../models/Post');
 const User = require('../models/User');
 
-// const getAllPostsController = async (req, res) => {
-//     console.log(req._id);
-//     return res.send(success(200, "These are all the posts"));
-// };
 const createPostController = async (req, res) => {
     try {
         const { caption } = req.body;
@@ -59,7 +55,7 @@ const likeAndUnlikePost = async (req, res) => {
 }
 const updatePostController = async (req, res) => {
     try {
-        const {postId} = req.body;
+        const {postId, caption} = req.body;
         const userId = req._id;
 
         const post = await Post.findById(postId);
@@ -75,14 +71,40 @@ const updatePostController = async (req, res) => {
         await post.save();
         return res.send(success(200, {post}));
     }
-    catch (error) {
+    catch (e) {
         return res.send(error(500, e.message));
     }
 };
 
+const deletePostController = async (req, res) => {
+    try {
+        const {postId} = req.body;
+        const curUserId = req._id;
+
+        const post = await post.findById(postId);
+        const curUser = await User.findById(curUserId);
+        if(!post) {
+            return res.send(error(404, 'Post not found'));
+        }
+
+        if(post.owner.toString() != curUserId) {
+            return res.send(error(403, 'Only owners can delete their posts'));
+        }
+
+        const index = curUser.posts.indexOf(postId);
+        curUser.posts.splice(index, 1);
+        await curUser.save();
+        await post.remove();
+
+        return res.send(success(200, 'Post deleted'));
+
+    } catch (e) {
+        return res.send(error(500, e.message));
+    }
+};
 module.exports = {
-    //getAllPostsController,
     createPostController,
     likeAndUnlikePost,
-    updatePostController
+    updatePostController,
+    deletePostController
 }

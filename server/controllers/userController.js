@@ -36,7 +36,25 @@ const followOrUnfollowUserController = async(req, res) => {
     } catch (e) {
         return res.send(error(500, e.message));
     }
+};
+
+const getPostsOfFollowing = async (req, res) => {
+    try {
+        const curUserid = req._id;
+        const curuser = await User.findById(curUserId);
+        const posts = await Post.find({
+        'owner' : {
+            '$in': curUser.followings
+        }
+    }) 
+
+    return res.send(success(200, posts));
+    } catch (error) {
+        console.log(e);
+        return res.send(error(500, e.message));
+    }
 }
     module.exports = {
-        followOrUnfollowUserController
+        followOrUnfollowUserController,
+        getPostsOfFollowing
     }
