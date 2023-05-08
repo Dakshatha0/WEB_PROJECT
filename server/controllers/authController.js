@@ -36,7 +36,7 @@ const logInController = async (req, res) => {
             return res.status(400).send(error(400, 'All fields are required'));
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select('+password');
         if(!user) {
             return res.status(404).send(error(404,'User not registered'));
         } 
