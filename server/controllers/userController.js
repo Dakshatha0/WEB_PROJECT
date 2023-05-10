@@ -57,7 +57,7 @@ const getPostsOfFollowing = async (req, res) => {
 const getMyPosts = async (req, res) => {
     try {
         const curUserId = req._id;
-        const allUserPosts = Post.find({
+        const allUserPosts = await Post.find({
             owner: curUserId,
         }).populate('likes');
 
@@ -66,7 +66,7 @@ const getMyPosts = async (req, res) => {
         console.log(error);
         return res.send(error(500, e.message));
     }
-}
+};
 const getUserPosts = async (req, res) => {
     try {
         const userId = req.body.userId;

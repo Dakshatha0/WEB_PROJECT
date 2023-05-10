@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
     },
     password: {
         type: String,
@@ -38,9 +38,11 @@ const userSchema = mongoose.Schema({
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'user'
+            ref: 'post'
         }
     ]
+},{
+    timestamps: true
 });
 
 module.exports = mongoose.model('user',userSchema);

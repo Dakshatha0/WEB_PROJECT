@@ -10,8 +10,8 @@ function App() {
   return (
     <div className="App">
       <Routes>
-          <Route element={<RequireUser />}   >
-          <Route path='/' element={<Home />} >
+          <Route element={<RequireUser />}>
+          <Route element={<Home />} >
             <Route path='/' element={<Feed />} />
             <Route path='/profile/:userId' element={<Profile />} />
           </Route>

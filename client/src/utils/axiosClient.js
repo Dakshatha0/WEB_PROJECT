@@ -13,7 +13,7 @@ axiosClient.interceptors.request.use(
 
         return request;
     }
-)
+);
 
 axiosClient.interceptors.response.use(
     async(response) => {
@@ -49,4 +49,4 @@ axiosClient.interceptors.response.use(
 
         return Promise.reject(error);
     }
-)
+);
