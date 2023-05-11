@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 function Home() {
   return <>
     <Navbar />
-    <Outlet />
+    <Outlet style={{marginTop: '60px'}}/>
   </>;
 }
 

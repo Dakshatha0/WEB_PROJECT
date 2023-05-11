@@ -2,6 +2,7 @@ import React from 'react';
 import './Navbar.scss';
 import Avatar from '../avatar/Avatar';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineLogout } from 'react-icons/ai';
 function Navbar() {
 
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ function Navbar() {
         <div className="right-side">
           <div className="profile hover-link" onClick={() => navigate('/profile/asbr')}>
             <Avatar />
+          </div>
+          <div className="logout hover-link">
+            <AiOutlineLogout />
           </div>
         </div>
       </div>

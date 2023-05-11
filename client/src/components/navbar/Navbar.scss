@@ -1,11 +1,26 @@
 .Navbar {
+    width: 100%;
+    position: fixed;
+    background-color: white;
+    top: 0;
     height: 60px;
     border-bottom: 1px solid var(--border-color);
+    
 
     .container {
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .right-side {
+        gap: 20px;
+        display: flex;
+        align-items: center;
+
+        .logout {
+            font-size: 1.6rem;
+        }
     }
 }
