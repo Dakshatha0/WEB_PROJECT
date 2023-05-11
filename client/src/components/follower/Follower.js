@@ -1,6 +1,6 @@
 import React from 'react'
 import Avatar from '../avatar/Avatar'
-import '.Follower.scss'
+import './Follower.scss'
 function Follower() {
   return (
     <div className='Follower'>

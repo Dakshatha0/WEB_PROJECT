@@ -1,6 +1,6 @@
 import React from 'react'
 import './Feed.scss'
-import Post from '../post.Post'
+import Post from '../post/Post'
 import Follower from '../follower/Follower'
 
 function Feed() {
