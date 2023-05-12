@@ -2,8 +2,11 @@ import React from 'react'
 import './Profile.scss'
 import Post from '../post/Post'
 import userImg from '../../assets/user.png'
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
+  const navigate = useNavigate();
+
   return (
     <div className='Profile'>
       <div className='container'>
@@ -22,7 +25,7 @@ function Profile() {
               <h4>12 Following</h4>
             </div>
             <button className='follow btn-primary'>Follow</button>
-            <button className='update-profile btn-secondary'>Update Profile</button>
+            <button className='update-profile btn-secondary' onClick={()=> {navigate('/updateProfile')}}>Update Profile</button>
           </div>
         </div>
       </div>

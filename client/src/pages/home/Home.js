@@ -1,12 +1,16 @@
 import React from 'react';
-//import { axiosClient } from '../../utils/axiosClient';
 import Navbar from '../../components/navbar/Navbar';
 import { Outlet } from 'react-router-dom';
+
 function Home() {
-  return <>
+  return (
+  <>
     <Navbar />
-    <Outlet style={{marginTop: '60px'}}/>
-  </>;
+    <div className='outlet' style={{marginTop: "60px"}}>
+      <Outlet style={{marginTop: '60px'}}/>
+    </div>
+  </>
+  );
 }
 
 export default Home;
