@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './UpdateProfile.scss'
-import userImg from '../../assets/user.png'
 import { useSelector, useDispatch } from 'react-redux';
-import { setLoading } from '../../redux/slices/appConfigSlice';
+import { updateMyProfile } from '../../redux/slices/appConfigSlice';
 
 function UpdateProfile() {
     const myProfile = useSelector((state) => state.appConfigReducer.myProfile);
@@ -29,15 +28,12 @@ function UpdateProfile() {
     }
     function handleSubmit(e) {
         e.preventDefault();
-        try {
-            dispatch(setLoading(true)); 
-            const 
-        } catch (error) {
-            
-        }
-        finally{
-            dispatch(setLoading(false)); 
-        }
+        dispatch(updateMyProfile({
+            name,
+            bio,
+            userImg
+
+        }));
     }
   return (
     <div className='UpdateProfile'>

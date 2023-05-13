@@ -18,7 +18,7 @@ export const getMyInfo = createAsyncThunk('user/getMyInfo', async (_, thunkAPI) 
 export const updateMyProfile = createAsyncThunk('user/updateMyProfile', async(body_, thunkAPI) =>{
     try {
         thunkAPI.dispatch(setLoading(true));
-        const response = await axiosClient.post('/user/getMyInfo');
+        const response = await axiosClient.put('/user/', body_);
         return response.result;
     } catch (error) {
         return Promise.reject(error);
@@ -43,6 +43,10 @@ const appConfigSlice = createSlice({
         builder.addCase(getMyInfo.fulfilled, (state, action) => {
             state.myProfile = action.payload.user;
         })
+        .addCase(updateMyProfile.fulfilled, (state, action) => {
+            state.myProfile = action.payload.user;
+        })
+        
     }
 })
 
