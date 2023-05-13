@@ -8,6 +8,6 @@ router.get('/getMyPosts', requireUser, UserController.getMyPosts);
 router.delete('/', requireUser, UserController.deleteMyProfile);
 router.get('/getMyInfo', requireUser, UserController.getMyInfo);
 router.get('/getUserPosts', requireUser, UserController.getUserPosts);
-
 router.put('/', requireUser, UserController.updateUserProfile);
+
 module.exports = router;

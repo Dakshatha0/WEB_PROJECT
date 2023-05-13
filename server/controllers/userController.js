@@ -2,6 +2,7 @@ const { json } = require('express');
 const User = require("../models/User");
 const {success, error} = require('../utils/responseWrapper');
 const Post = require('../models/Post');
+const cloudinary = require('cloudinary').v2;
 
 const followOrUnfollowUserController = async(req, res) => {
     try {
@@ -149,6 +150,15 @@ const updateUserProfile = async (req, res) => {
         }
         if(bio) {
             user.bio = bio;
+        }
+        if(userImg) {
+            const cloudinary = await cloudinary.uploader.upload(userImg, {
+                folder: 'profileImg'
+            })
+            user.avatar = {
+                url: cloudImg.secure_url,
+                publicId: cloudImg.public_id
+            }
         }
         await user.save();
         return res.send(success(200, {user}));
