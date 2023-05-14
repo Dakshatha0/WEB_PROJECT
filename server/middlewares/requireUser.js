@@ -15,7 +15,7 @@ module.exports = async(req,res,next) => {
         
         const user = await User.findById(req._id);
         if(!user) {
-            return res.send(error(401, 'User not found'));
+            return res.send(error(404, 'User not found'));
         }
         next();
     }   

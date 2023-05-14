@@ -13,7 +13,7 @@ const followOrUnfollowUserController = async(req, res) => {
     const userToFollow = await User.findById(userIdToFollow);
     const curUser = await User.findById(curUserId);
 
-    if(curUserId == userIdtoFollow) {
+    if(curUserId === userIdtoFollow) {
         return res.send(error(409,'User cannot follow themselves'));
     }
     if(!userToFollow) {
@@ -43,14 +43,28 @@ const followOrUnfollowUserController = async(req, res) => {
 const getPostsOfFollowing = async (req, res) => {
     try {
         const curUserid = req._id;
-        const curuser = await User.findById(curUserId);
-        const posts = await Post.find({
+        const curuser = await User.findById(curUserId).populate('followings');
+        const fullPosts = await Post.find({
         'owner' : {
             '$in': curUser.followings
-        }
-    }) 
+        },
+    }).populate('owner');
+    
+    const posts = fullPosts
+            .map((item) => mapPostOutput(item, req._id))
+            .reverse();
+        
+        const followingsIds = curUser.followings.map((item) => item._id);
+        followingsIds.push(req._id);
 
-    return res.send(success(200, posts));
+        const suggestions = await User.find({
+            _id: {
+                $nin: followingsIds,
+            },
+        });
+
+
+    return res.send(success(200, {...curUser._doc, suggestions, posts}));
     } catch (error) {
         console.log(e);
         return res.send(error(500, e.message));
@@ -123,7 +137,6 @@ const deleteMyProfile = async (req, res) => {
             httpOnly: true,
             secure: true
         })
-
         return res.send(success(200, 'User deleted'));
     } 
     catch (error) {
@@ -143,7 +156,7 @@ const getMyInfo = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
     try {
-        const {name, bio} = req.body;
+        const {name, bio, userImg} = req.body;
 
         const user = await User.findById(req._id);
         if(name) {
@@ -159,12 +172,12 @@ const updateUserProfile = async (req, res) => {
             user.avatar = {
                 url: cloudImg.secure_url,
                 publicId: cloudImg.public_id
-            }
+            };
         }
         await user.save();
         return res.send(success(200, {user}));
     } catch (error) {
-        console.log('error put',e);
+        console.log('put e',e);
         return res.send(error(500, e.message));
     }
 };

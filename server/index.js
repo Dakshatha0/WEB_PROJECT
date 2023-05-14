@@ -12,22 +12,25 @@ const cloudinary = require('cloudinary').v2;
 dotenv.config("./.env");
 
 cloudinary.config({
+  secure:true,
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-
 const app = express();
 
 //middlewares
-app.use(express.json({limit: '10mb'}))
-app.use(morgan('common'))
+app.use(express.json({limit: '10mb'}));
+app.use(morgan('common'));
 app.use(cookieParser());
-app.use(cors({
-    credentials: true,
-    origin: 'http://localhost:3000'
-}));
+let origin = 'http://localhost:3000';
+app.use(
+    cors({
+        credentials: true,
+        origin
+})
+);
 
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
