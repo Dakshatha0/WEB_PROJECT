@@ -24,11 +24,10 @@ const app = express();
 app.use(express.json({limit: '10mb'}));
 app.use(morgan('common'));
 app.use(cookieParser());
-let origin = 'http://localhost:3000';
 app.use(
     cors({
         credentials: true,
-        origin
+        origin : 'http://localhost:3000'
 })
 );
 

@@ -34,7 +34,6 @@ function UpdateProfile() {
             name,
             bio,
             userImg
-
         }));
     }
   return (
@@ -43,7 +42,7 @@ function UpdateProfile() {
             <div className="left-part">
                 <div className="input-user-img">
                     <label htmlFor="inputImg" className='labelImg'>
-                        <img src={userImg?userImg: dummyUserImg} alt={name} />
+                        <img src={userImg ? userImg: dummyUserImg} alt={name} />
                     </label>
                     <input className="inputImg" id="inputImg" type="file" accept='image/*' onChange={handleImageChange}/>
                 </div>

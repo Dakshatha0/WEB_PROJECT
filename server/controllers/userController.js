@@ -42,8 +42,8 @@ const followOrUnfollowUserController = async(req, res) => {
 
 const getPostsOfFollowing = async (req, res) => {
     try {
-        const curUserid = req._id;
-        const curuser = await User.findById(curUserId).populate('followings');
+        const curUserId = req._id;
+        const curUser = await User.findById(curUserId).populate('followings');
         const fullPosts = await Post.find({
         'owner' : {
             '$in': curUser.followings
@@ -176,7 +176,7 @@ const updateUserProfile = async (req, res) => {
         }
         await user.save();
         return res.send(success(200, {user}));
-    } catch (error) {
+    } catch (e) {
         console.log('put e',e);
         return res.send(error(500, e.message));
     }
