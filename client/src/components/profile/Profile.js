@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Profile.scss'
 import Post from '../post/Post'
 import userImg from '../../assets/user.png'
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import {useDispatch} from 'react-redux' 
+import { getUserProfile } from '../../redux/slices/postsSlice';
 function Profile() {
   const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserProfile({
+      userId: params.userId
+    }))
+  }, [params]);
 
   return (
     <div className='Profile'>
