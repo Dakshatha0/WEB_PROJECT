@@ -65,7 +65,7 @@ const getPostsOfFollowing = async (req, res) => {
 
 
     return res.send(success(200, {...curUser._doc, suggestions, posts}));
-    } catch (error) {
+    } catch (e) {
         console.log(e);
         return res.send(error(500, e.message));
     }

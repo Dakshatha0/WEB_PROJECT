@@ -13,7 +13,7 @@ function Home() {
   <>
     <Navbar />
     <div className='outlet' style={{marginTop: "60px"}}>
-      <Outlet style={{marginTop: '60px'}}/>
+      <Outlet />
     </div>
   </>
   );

@@ -7,7 +7,7 @@ function Avatar({src}) {
     <div className='Avatar'>
         <img src={src? src: userImg} alt='user avatar'/>
     </div>
-  )
+  );
 }
 
-export default Avatar
+export default Avatar;

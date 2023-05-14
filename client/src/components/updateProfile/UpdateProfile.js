@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './UpdateProfile.scss'
 import { useSelector, useDispatch } from 'react-redux';
 import { updateMyProfile } from '../../redux/slices/appConfigSlice';
+import dummyUserImg from '../../assets/user.png'
 
 function UpdateProfile() {
     const myProfile = useSelector((state) => state.appConfigReducer.myProfile);
@@ -9,10 +10,11 @@ function UpdateProfile() {
     const [bio, setBio] = useState('');
     const [userImg, setUserImg] = useState('');
     const dispatch = useDispatch();
+
     useEffect(()=> {
         setName(myProfile?.name || '');
         setBio(myProfile?.bio || ''); 
-        setUserImg(myProfile?.avatar.url || '');
+        setUserImg(myProfile?.avatar?.url);
     }, [myProfile]);
 
     function handleImageChange(e) {
@@ -40,7 +42,9 @@ function UpdateProfile() {
         <div className="container">
             <div className="left-part">
                 <div className="input-user-img">
-                    <label htmlFor="inputImg" className='labelImg'>User Image</label>
+                    <label htmlFor="inputImg" className='labelImg'>
+                        <img src={userImg?userImg: dummyUserImg} alt={name} />
+                    </label>
                     <input className="inputImg" id="inputImg" type="file" accept='image/*' onChange={handleImageChange}/>
                 </div>
             </div>
@@ -55,7 +59,7 @@ function UpdateProfile() {
             </div>
         </div>
     </div>
-  )
+  );
 }
 
-export default UpdateProfile
+export default UpdateProfile;

@@ -24,7 +24,8 @@ function Signup() {
  
     }
 
-    return <div className="Signup">
+    return (
+    <div className="Signup">
     <div className="signup-box">
         <h2 className="heading">Signup</h2>
         <form onSubmit={handleSubmit}>
@@ -42,7 +43,8 @@ function Signup() {
         <p className='subheading'>
             Already have an account? <Link to='/login'>Log In</Link></p>
     </div>
-</div>;
+</div>
+    );
 }
 
 export default Signup

@@ -1,18 +1,41 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Avatar from '../avatar/Avatar'
 import './Follower.scss'
-function Follower() {
+import {useSelector, useDispatch} from 'react-redux';
+import {followAndUnfollowUser} from '../../redux/slices/feedSlice'
+import {useNavigate} from 'react-router';
+
+function Follower({user}) {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const feedData = useSelector((state) => state.feedDataReducer.feedData);
+  const [isFollowing, setIsFollowing] = useState();
+
+  useEffect(() => {
+    setIsFollowing(
+      feedData.followings.find((item) => item._id === user._id)
+  );
+}, [feedData, user._id]);
+
+  function handleUserFollow() {
+    dispatch(followAndUnfollowUser({
+      userIdToFollow: user._id
+    }))
+  }
   return (
     <div className='Follower'>
-        <div className="user-info">
-            <Avatar />
-            <h4 className='name'>Sri Uppalapati</h4>
+        <div className="user-info" onClick={() => navigate(`/profile/${user._id}`)}>
+            <Avatar src={user?.avatar?.url}/>
+            <h4 className='name'>{user?.name}</h4>
         </div>
-        <Avatar />
-        <h4 className='name'>Sri Uppalapati</h4>
-        <h5 className='hover-link follow-link'>Follow</h5>
+
+        <h5 onClick={handleUserFollow}
+                className={isFollowing ? "hover-link follow-link" : "btn-primary" }>
+                {isFollowing ? "Unfollow" : "Follow"}
+            </h5>
     </div>
-  )
+  );
 }
 
-export default Follower
+export default Follower;

@@ -29,17 +29,20 @@ function App() {
     }, [isLoading]);
 
     useEffect(() => {
-      switch (toastData.type) {
-        case TOAST_SUCCESS:
-            toast.success(toastData.message);
-            break;
-        case TOAST_FAILURE:
-            toast.error(toastData.message);
-            break;
-        default:
-            // Handle the case when toastData.type does not match any of the cases
-    }
-    }, [toastData]);
+        if (toastData) {
+          switch (toastData.type) {
+            case TOAST_SUCCESS:
+              toast.success(toastData.message);
+              break;
+            case TOAST_FAILURE:
+              toast.error(toastData.message);
+              break;
+            default:
+              // Handle the case when toastData.type does not match any of the cases
+          }
+        }
+      }, [toastData]);
+      
 
     return (
         <div className="App">
