@@ -42,7 +42,6 @@ function App() {
           }
         }
       }, [toastData]);
-      
 
     return (
         <div className="App">
@@ -52,10 +51,13 @@ function App() {
             </div>
             <Routes>
                 <Route element={<RequireUser />}>
-                    <Route path="/" element={<Home />}>
-                    <Route path="/" element={<Feed />} />
-                    <Route path="/profile/:userId" element={<Profile />} />
-                    <Route path="/updateProfile" element={<UpdateProfile />} />
+                    <Route element={<Home />}>
+                        <Route path="/" element={<Feed />} />
+                        <Route path="/profile/:userId" element={<Profile />} />
+                        <Route
+                            path="/updateProfile"
+                            element={<UpdateProfile />}
+                        />
                     </Route>
                 </Route>
                 <Route element={<OnlyIfNotLoggedIn />}>
@@ -68,3 +70,4 @@ function App() {
 }
 
 export default App;
+

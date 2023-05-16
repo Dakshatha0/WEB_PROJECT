@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({ 
+const userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -17,13 +17,17 @@ const userSchema = mongoose.Schema({
         required: true
     },
     bio: {
-        type: String
+        type: String,
     },
-    avatar: { //to attach images
+    avatar: {
         publicId: String,
         url: String
     },
-    followers: [ //array of Object IDs
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    followers: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'user'
@@ -41,8 +45,8 @@ const userSchema = mongoose.Schema({
             ref: 'post'
         }
     ]
-},{
+}, {
     timestamps: true
 });
 
-module.exports = mongoose.model('user',userSchema);
+module.exports = mongoose.model("user", userSchema);

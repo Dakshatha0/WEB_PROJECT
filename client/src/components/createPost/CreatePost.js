@@ -8,7 +8,7 @@ import { getUserProfile } from "../../redux/slices/postsSlice";
 
 function CreatePost() {
     const [postImg, setPostImg] = useState("");
-    const [caption, setCaption] = useState('');
+    const [caption, setCaption] = useState('')
     const dispatch = useDispatch();
     const myProfile = useSelector(state => state.appConfigReducer.myProfile);
 
@@ -24,7 +24,7 @@ function CreatePost() {
         };
     };
 
-    const handlePostSubmit = async() => {
+    const hanldePostSubmit = async() => {
         try {
             const result = await axiosClient.post('/posts', {
                 caption,
@@ -35,11 +35,13 @@ function CreatePost() {
                 userId: myProfile?._id
             }));
         } catch (error) {
-            console.log('what is the error', error);
+            console.log('what is th error', error);
         } finally {
             setCaption('');
             setPostImg('');
         }
+        
+
     }
 
     return (
@@ -78,7 +80,7 @@ function CreatePost() {
                             onChange={handleImageChange}
                         />
                     </div>
-                    <button className="post-btn btn-primary" onClick={handlePostSubmit}>Post</button>
+                    <button className="post-btn btn-primary" onClick={hanldePostSubmit}>Post</button>
                 </div>
             </div>
         </div>

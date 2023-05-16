@@ -1,29 +1,29 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import { axiosClient } from '../../utils/axiosClient'
-import { likeAndUnlikePost } from './postsSlice';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosClient } from "../../utils/axiosClient";
+import { likeAndUnlikePost } from "./postsSlice";
 
 export const getFeedData = createAsyncThunk(
-    'user/getFeedData',
+    "user/getFeedData",
     async () => {
         try {
-            const response = await axiosClient.get('/user/getFeedData');
-            console.log('userProfile', response);
+            const response = await axiosClient.get("/user/getFeedData");
+            console.log("userProfile", response);
             return response.result;
         } catch (error) {
             return Promise.reject(error);
-        }
+        } 
     }
 );
 
 export const followAndUnfollowUser = createAsyncThunk(
-    'user/followAndUnfollow',
+    "user/followAndUnfollow",
     async (body) => {
         try {
-            const response = await axiosClient.post('/user/follow', body);
+            const response = await axiosClient.post("/user/follow", body);
             return response.result.user;
         } catch (error) {
             return Promise.reject(error);
-        }
+        } 
     }
 );
 

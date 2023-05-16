@@ -1,42 +1,43 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import { axiosClient } from '../../utils/axiosClient';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosClient } from "../../utils/axiosClient";
 
-//call getmyinfo api
-export const getMyInfo = createAsyncThunk('user/getMyInfo', async (_, thunkAPI) => {
-    try {
-        thunkAPI.dispatch(setLoading(true));
-        const response = await axiosClient.get('/user/getMyInfo');
-        return response.result;
-    } catch (error) {
-        return Promise.reject(error);
+export const getMyInfo = createAsyncThunk(
+    "user/getMyInfo",
+    async () => {
+        try {
+            const response = await axiosClient.get("/user/getMyInfo");
+            return response.result;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
-    finally {
-        thunkAPI.dispatch(setLoading(true));
-    }
-});
+);
 
-export const updateMyProfile = createAsyncThunk('user/updateMyProfile', async(body_, thunkAPI) =>{
-    try {
-        thunkAPI.dispatch(setLoading(true));
-        const response = await axiosClient.put('/user/', body_);
-        return response.result;
-    } catch (error) {
-        return Promise.reject(error);
+export const updateMyProfile = createAsyncThunk(
+    "user/updateMyProfile",
+    async (body) => {
+        try {
+            const response = await axiosClient.put("/user/", body);
+            return response.result;
+        } catch (error) {
+            return Promise.reject(error);
+        } 
     }
-    finally {
-        thunkAPI.dispatch(setLoading(true));
-    }
-})
+);
 
 const appConfigSlice = createSlice({
-    name: 'appConfigSlice',
+    name: "appConfigSlice",
     initialState: {
         isLoading: false,
-        myProfile: null
+        toastData: {},
+        myProfile: null,
     },
     reducers: {
         setLoading: (state, action) => {
             state.isLoading = action.payload;
+        },
+        showToast: (state, action) => {
+            state.toastData = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -45,10 +46,10 @@ const appConfigSlice = createSlice({
         })
         .addCase(updateMyProfile.fulfilled, (state, action) => {
             state.myProfile = action.payload.user;
-        })
-        
-    }
-})
+        });
+    },
+});
 
 export default appConfigSlice.reducer;
-export const {setLoading} = appConfigSlice.actions;
+
+export const { setLoading, showToast } = appConfigSlice.actions;

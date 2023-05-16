@@ -1,16 +1,20 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import { axiosClient } from '../../utils/axiosClient';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosClient } from "../../utils/axiosClient";
 
-//call getmyinfo api
-export const getUserProfile = createAsyncThunk('user/getUserProfile', async (body) => {
-    try {
-        
-        const response = await axiosClient.post('/user/getUserProfile', body);
-        return response.result;
-    } catch (error) {
-        return Promise.reject(error);
+export const getUserProfile = createAsyncThunk(
+    "user/getUserProfile",
+    async (body) => {
+        try {
+            const response = await axiosClient.post(
+                "/user/getUserProfile",
+                body
+            );
+            return response.result;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
-});
+);
 
 export const likeAndUnlikePost = createAsyncThunk(
     "post/likeAndUnlike",
@@ -47,6 +51,5 @@ const postsSlice = createSlice({
             });
     },
 });
-
 
 export default postsSlice.reducer;

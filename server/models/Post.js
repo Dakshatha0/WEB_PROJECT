@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const postSchema = mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref : 'user',
+        ref: 'user',
         required: true
     },
     image: {
@@ -23,4 +23,5 @@ const postSchema = mongoose.Schema({
 }, {
     timestamps: true
 })
-module.exports = mongoose.model('post',postSchema);
+
+module.exports = mongoose.model('post', postSchema);
